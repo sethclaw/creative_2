@@ -1,0 +1,35 @@
+<title>Artist popularity</title>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<body>
+  artist name: <input type="text" id="artistField" value=""><br>
+  <button id="searchButton" type="button">Search</button>
+  <div id="searchResults">
+
+  <ul>
+  </ul>
+
+  </div>
+
+</body>
+
+<script>
+$(document).ready(function() {
+
+  // Artist Querying
+  $('#searchButton').click(function() {
+    
+    $.getJSON("https://api.spotify.com/v1/search?q="+$('#artistField').val()+"&type=artist&limit=25&offset=0",function(data) {
+      let artistsData = data.artists.items;
+      let artistDict = {};
+
+      // Iterate JSON list, putting artists' name and popularity into dictionary
+      $.each( artistsData, function( index, artist ){
+        artistDict[artist.name] = artist.popularity;
+      });
+
+      console.log(artistDict)
+    });
+  });
+});
+
+</script>
