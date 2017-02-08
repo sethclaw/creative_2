@@ -7,30 +7,47 @@
   <title>Spotify // DataVis</title>
   
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-  
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <body>
     <div id="search">
       artist name: <input type="text" id="artistField" value=""><br>
       <button id="searchButton" type="button">Search</button>
     </div>
+    <div id='results' style="width: 480px; height: 500px;">
+      
+    </div>
   </body>
 
   <script>
     $(document).ready(function() {
-
+      var artistsDict;
       // Artist Querying
       $('#searchButton').click(function() {
         
         $.getJSON("https://api.spotify.com/v1/search?q="+$('#artistField').val()+"&type=artist&limit=25&offset=0",function(data) {
           let artistsData = data.artists.items;
-          let artistDict = {};
+          artistDict = {};
 
           // Iterate JSON list, putting artists' name and popularity into dictionary
+          let x = [];
+
+          let y = [];
+
           $.each( artistsData, function( index, artist ){
             artistDict[artist.name] = artist.popularity;
+            x[index] = artist.name;
+            y[index] = artist.popularity;
           });
-
-          console.log(artistDict)
+          console.log(x);
+          console.log(y);
+          var data = [
+            {
+              x: x,
+              y: y,
+              type: 'bar'
+            }
+          ];
+          Plotly.newPlot('results', data);
         });
       });
     });
