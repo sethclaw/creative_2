@@ -1,28 +1,40 @@
-<title>Artist popularity</title>
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<body>
-  artist name: <input type="text" id="artistField" value=""><br>
-  <button id="searchButton" type="button">Search</button>
-</body>
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="main.css">
+  </head>
 
-<script>
-$(document).ready(function() {
+  <title>Spotify // DataVis</title>
+  
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  
+  <body>
+    <div id="search">
+      artist name: <input type="text" id="artistField" value=""><br>
+      <button id="searchButton" type="button">Search</button>
+    </div>
+  </body>
 
-  // Artist Querying
-  $('#searchButton').click(function() {
-    
-    $.getJSON("https://api.spotify.com/v1/search?q="+$('#artistField').val()+"&type=artist&limit=25&offset=0",function(data) {
-      let artistsData = data.artists.items;
-      let artistDict = {};
+  <script>
+    $(document).ready(function() {
 
-      // Iterate JSON list, putting artists' name and popularity into dictionary
-      $.each( artistsData, function( index, artist ){
-        artistDict[artist.name] = artist.popularity;
+      // Artist Querying
+      $('#searchButton').click(function() {
+        
+        $.getJSON("https://api.spotify.com/v1/search?q="+$('#artistField').val()+"&type=artist&limit=25&offset=0",function(data) {
+          let artistsData = data.artists.items;
+          let artistDict = {};
+
+          // Iterate JSON list, putting artists' name and popularity into dictionary
+          $.each( artistsData, function( index, artist ){
+            artistDict[artist.name] = artist.popularity;
+          });
+
+          console.log(artistDict)
+        });
       });
-
-      console.log(artistDict)
     });
-  });
-});
 
-</script>
+  </script>
+
+</html>
