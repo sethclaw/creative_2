@@ -17,4 +17,16 @@ button {
     display: inline-block;
     font-size: 15px;
     margin: 20px;
+	border-radius: 20px; 
+		
+}
+#results{
+	background-color: rgba(184,189,184,0.70);
+	padding: 25px 25px;
+	display:inline-block;
+	border-radius: 20px;
+}
+.cover{
+	height: 640;
+	width: 640;
 }
