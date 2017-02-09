@@ -23,7 +23,7 @@ $(document).ready(function() {
 			
 			var imageInfo = [];
 			$.each(artistsData, function(index, artist) {
-				x[index] = artist.name;
+				x[index] = artist.name.replace(/\$/g,"S");
 				y[index] = artist.popularity;
 				if(artist.images[0] !== undefined &&
 				  artist.id !== undefined &&
@@ -36,6 +36,8 @@ $(document).ready(function() {
 				}			
 			});
 			console.log(imageInfo);
+			console.log(x);
+			console.log(y);
 			var plotSettings = [{
 				x: x,
 				y: y,
@@ -43,8 +45,8 @@ $(document).ready(function() {
 				margin: {
 					l: 50,
 					r: 50,
-					b: 200,
-					t: 100
+					b: 150,
+					t: 50
 				},
 				marker: {         // marker is an object, valid marker keys: #scatter-marker
             		color: 'rgb(36, 255, 55)' // more about "marker.color": #scatter-marker-color
@@ -52,9 +54,34 @@ $(document).ready(function() {
 				autosize:true
 			}];
 
+			var layout = {
+				title: 'Spotify Artist Popularity',
+				xaxis: {
+					title: 'Artist',
+					titlefont: {
+						family: 'Courier New, monospace',
+						size: 18,
+						color: '#7f7f7f'
+					}
+				},
+				yaxis: {
+					title: 'Popularity',
+					titlefont: {
+						family: 'Courier New, monospace',
+						size: 18,
+						color: '#7f7f7f'
+					}
+				},
+				margin: {
+					l: 50,
+					r: 50,
+					b: 200,
+					t: 100
+				}
+			};
 			$('#results').show();
 
-			Plotly.newPlot('plot', plotSettings);
+			Plotly.newPlot('plot', plotSettings, layout);
 			
 			$("#previews").html("");
 			$("#previews").css("display", "-webkit-flex");
