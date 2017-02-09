@@ -5,7 +5,11 @@ $(document).ready(function() {
 	var audioObject;
 	// Artist Querying
 	
-
+    $(document).bind('keypress', function(e) {
+        if(e.keyCode==13){
+             $('#searchButton').trigger('click');
+         }
+    });
 	
 	$('#searchButton').click(function() {
 		let query = "https://api.spotify.com/v1/search?q=" + $('#artistField').val() + "&type=artist&limit=25";
@@ -78,15 +82,20 @@ $(document).ready(function() {
 				  image.name !== undefined){
 					var d = $(document.createElement('div'));
 					var i = $(document.createElement('img'));
-					var p = $(document.createElement('p'));
+					var a = $(document.createElement('a'));
+					var artistPage = 'https://play.spotify.com/artist/' + image.id;
 					d.css("margin", "20px");
 					i.attr("id",image.id);
 					i.addClass('cover');
 					i.attr('src',image.src.url);
 					i.attr('width','200px');
-					p.text(image.name);
+					a.text(image.name);
+					a.attr('href',artistPage);
+					a.css("text-decoration", "none");
+					a.css("color", "white");
+					a.css("display", "block");
 					i.appendTo(d);
-					p.appendTo(d);
+					a.appendTo(d);
 					d.appendTo($("#previews"));
 				}
 			});
